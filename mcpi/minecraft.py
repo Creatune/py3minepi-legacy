@@ -41,7 +41,7 @@ class CmdPositioner(object):
     def getPos(self, id):
         """Get entity position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getPos", id)
-        return Vec3(*map(float, s.split(",")))
+        return Vec3(*list(map(float, s.split(","))))
 
     def setPos(self, id, *args):
         """Set entity position (entityId:int, x,y,z)"""
@@ -50,7 +50,7 @@ class CmdPositioner(object):
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
-        return Vec3(*map(float, s.split(",")))
+        return Vec3(*list(map(float, s.split(","))))
 
     def setTilePos(self, id, *args):
         """Set entity tile position (entityId:int, x,y,z)"""
@@ -120,7 +120,7 @@ class CmdEvents:
         """Only triggered by sword => [BlockEvent]"""
         s = self.conn.sendReceive("events.block.hits")
         events = [e for e in s.split("|") if e]
-        return [BlockEvent.Hit(*map(int, e.split(","))) for e in events]
+        return [BlockEvent.Hit(*list(map(int, e.split(",")))) for e in events]
 
 
 class Minecraft:
@@ -143,7 +143,7 @@ class Minecraft:
         """Get block with data (x,y,z) => Block"""
 
         ans = self._conn.sendReceive("world.getBlockWithData", intFloor(args))
-        return Block(*map(int, ans.split(",")))
+        return Block(*list(map(int, ans.split(","))))
 
         """
         @TODO (What?)
